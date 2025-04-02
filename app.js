@@ -47,27 +47,20 @@ document.getElementById('patientForm').addEventListener('submit', function(event
     };
 
     // Enviar los datos usando Fetch API
-        try {
-            const response = await fetch('https://cors-anywhere.herokuapp.com/hhttps://hl7-fhir-ehrjosue.onrender.com/patient', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json'
-                },
-                body: JSON.stringify(patient)
-            });
-    
-            if (!response.ok) {
-                const errorData = await response.text();
-                throw new Error(Error en la API: ${response.status} - ${errorData});
-            }
-    
-            const data = await response.json();
-            console.log('Success:', data);
-            alert(Paciente creado exitosamente! ID: ${data.id || data._id});
-            document.getElementById('patientForm').reset();
-        } catch (error) {
-            console.error('Error:', error);
-            alert(Hubo un error al crear el paciente: ${error.message});
-        }
+    fetch('hhttps://hl7-fhir-ehrjosue.onrender.com/patient', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(patient)
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log('Success:', data);
+        alert('Paciente creado exitosamente!');
+    })
+    .catch((error) => {
+        console.error('Error:', error);
+        alert('Hubo un error al crear el paciente.');
     });
+});
