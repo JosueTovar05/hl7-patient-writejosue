@@ -1,23 +1,20 @@
-document.getElementById('patientForm').addEventListener('submit', async function(event) {
+document.getElementById('patientForm').addEventListener('submit', function(event) {
     event.preventDefault();
 
-    const name = document.getElementById('name').value.trim();
-    const familyName = document.getElementById('familyName').value.trim();
+    // Obtener los valores del formulario
+    const name = document.getElementById('name').value;
+    const familyName = document.getElementById('familyName').value;
     const gender = document.getElementById('gender').value;
     const birthDate = document.getElementById('birthDate').value;
-    const identifierSystem = document.getElementById('identifierSystem').value.trim();
-    const identifierValue = document.getElementById('identifierValue').value.trim();
-    const cellPhone = document.getElementById('cellPhone').value.trim();
-    const email = document.getElementById('email').value.trim();
-    const address = document.getElementById('address').value.trim();
-    const city = document.getElementById('city').value.trim();
-    const postalCode = document.getElementById('postalCode').value.trim();
+    const identifierSystem = document.getElementById('identifierSystem').value;
+    const identifierValue = document.getElementById('identifierValue').value;
+    const cellPhone = document.getElementById('cellPhone').value;
+    const email = document.getElementById('email').value;
+    const address = document.getElementById('address').value;
+    const city = document.getElementById('city').value;
+    const postalCode = document.getElementById('postalCode').value;
 
-    if (!name || !familyName || !gender || !birthDate || !identifierSystem || !identifierValue) {
-        alert("Por favor, complete todos los campos obligatorios.");
-        return;
-    }
-
+    // Crear el objeto Patient en formato FHIR
     const patient = {
         resourceType: "Patient",
         name: [{
@@ -31,40 +28,39 @@ document.getElementById('patientForm').addEventListener('submit', async function
             system: identifierSystem,
             value: identifierValue
         }],
-        telecom: [
-            cellPhone ? { system: "phone", value: cellPhone, use: "home" } : null,
-            email ? { system: "email", value: email, use: "home" } : null
-        ].filter(Boolean),
+        telecom: [{
+            system: "phone",
+            value: cellPhone,
+            use: "home"
+        }, {
+            system: "email",
+            value: email,
+            use: "home"
+        }],
         address: [{
             use: "home",
-            line: address ? [address] : [],
+            line: [address],
             city: city,
             postalCode: postalCode,
             country: "Colombia"
         }]
     };
 
-    try {
-        const response = await fetch('https://cors-anywhere.herokuapp.com/https://hl7-fhir-ehrjosue.onrender.com/patient', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json'
-            },
-            body: JSON.stringify(patient)
-        });
-
-        if (!response.ok) {
-            const errorData = await response.text();
-            throw new Error(Error en la API: ${response.status} - ${errorData});
-        }
-
-        const data = await response.json();
+    // Enviar los datos usando Fetch API
+    fetch('hhttps://hl7-fhir-ehrjosue.onrender.com/patient', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(patient)
+    })
+    .then(response => response.json())
+    .then(data => {
         console.log('Success:', data);
-        alert(Paciente creado exitosamente! ID: ${data.id || data._id});
-        document.getElementById('patientForm').reset();
-    } catch (error) {
+        alert('Paciente creado exitosamente!');
+    })
+    .catch((error) => {
         console.error('Error:', error);
-        alert(Hubo un error al crear el paciente: ${error.message});
-    }
+        alert('Hubo un error al crear el paciente.');
+    });
 });
