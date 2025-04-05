@@ -46,54 +46,22 @@ document.getElementById('patientForm').addEventListener('submit', function(event
         }]
     };
 
-    // URL alternativa por si la base necesita ruta específica
-    const baseUrl = 'https://hl7-fhir-ehrjosue.onrender.com';
-    const endpoints = [
-        '/Patient',
-        '/fhir/Patient',
-        '/fhir/r4/Patient',
-        '/api/Patient'
-    ];
+    // Enviar los datos usando Fetch API
+    fetch('https://hl7-fhir-ehrjosue.onrender.com/Patient', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(patient)
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log('Success:', data);
+        alert('Paciente creado exitosamente!');
+    })
+    .catch((error) => {
+        console.error('Error:', error);
+        alert('Hubo un error al crear el paciente.');
+    });
     
-    // Intentar con diferentes endpoints comunes
-    const tryEndpoints = async (index = 0) => {
-        if (index >= endpoints.length) {
-            throw new Error('No se pudo encontrar el endpoint correcto');
-        }
-        
-        const url = baseUrl + endpoints[index];
-        console.log('Intentando con:', url);
-        
-        try {
-            const response = await fetch(url, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/fhir+json', // Content-Type específico para FHIR
-                    // 'Authorization': 'Bearer TU_TOKEN_AQUI' // Si requiere autenticación
-                },
-                body: JSON.stringify(patient)
-            });
-            
-            if (!response.ok) {
-                if (response.status === 404 && index < endpoints.length - 1) {
-                    return tryEndpoints(index + 1);
-                }
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
-            
-            const data = await response.json();
-            console.log('Success:', data);
-            alert('Paciente creado exitosamente!');
-            return data;
-        } catch (error) {
-            if (index < endpoints.length - 1) {
-                return tryEndpoints(index + 1);
-            }
-            console.error('Error:', error);
-            alert(`Hubo un error al crear el paciente: ${error.message}`);
-            throw error;
-        }
-    };
-    
-    tryEndpoints();
 });
