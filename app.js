@@ -45,13 +45,16 @@ document.getElementById('patientForm').addEventListener('submit', async function
     };
 
     try {
-        const response = await fetch('https://cors-anywhere.herokuapp.com/https://hl7-fhir-ehrjosue.onrender.com/Patient'), {
+        const response = await fetch('https://cors-anywhere.herokuapp.com/https://hl7-fhir-ehrjosue.onrender.com/Patient', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
                 'Accept': 'application/json'
             },
             body: JSON.stringify(patient)
+        });
+        
+        
         });
 
         if (!response.ok) {
