@@ -54,14 +54,23 @@ document.getElementById('patientForm').addEventListener('submit', function(event
         },
         body: JSON.stringify(patient)
     })
-    .then(response => response.json())
+    .then(response => {
+        console.log('Status code:', response.status);
+        return response.json().then(data => {
+            if (!response.ok) {
+                // Si la respuesta no es exitosa, lanzamos un error con los detalles
+                throw new Error(JSON.stringify(data));
+            }
+            return data;
+        });
+    })
     .then(data => {
         console.log('Success:', data);
         alert('Paciente creado exitosamente!');
     })
     .catch((error) => {
-        console.error('Error:', error);
-        alert('Hubo un error al crear el paciente.');
+        console.error('Error details:', error);
+        alert('Hubo un error al crear el paciente: ' + error.message);
     });
     
 });
