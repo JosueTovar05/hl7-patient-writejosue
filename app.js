@@ -56,15 +56,15 @@ document.getElementById('patientForm').addEventListener('submit', async function
 
         if (!response.ok) {
             const errorData = await response.text();
-            throw new Error(`Error en la API: ${response.status} - ${errorData}`);
+            throw new Error(Error en la API: ${response.status} - ${errorData});
         }
 
         const data = await response.json();
         console.log('Success:', data);
-        alert(`Paciente creado exitosamente! ID: ${data.id || data._id}`);
+        alert(Paciente creado exitosamente! ID: ${data.id || data._id});
         document.getElementById('patientForm').reset();
     } catch (error) {
         console.error('Error:', error);
-        alert(`Error al crear paciente: ${error.message}`);
+        alert(Hubo un error al crear el paciente: ${error.message});
     }
 });
