@@ -47,13 +47,13 @@ document.getElementById('patientForm').addEventListener('submit', function(event
     };
 
     // Enviar los datos usando Fetch API
-    fetch('https://hl7-fhir-ehrjosue.onrender.com/patient'), {
+    fetch('https://hl7-fhir-ehrjosue.onrender.com/patient', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify(patient)
-    }
+    })
     .then(response => response.json())
     .then(data => {
         console.log('Success:', data);
@@ -63,4 +63,5 @@ document.getElementById('patientForm').addEventListener('submit', function(event
         console.error('Error:', error);
         alert('Hubo un error al crear el paciente.');
     });
+    
 });
