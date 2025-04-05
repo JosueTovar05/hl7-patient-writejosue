@@ -61,7 +61,7 @@ document.getElementById('patientForm').addEventListener('submit', async function
 
         const data = await response.json();
         console.log('Success:', data);
-        alert(Paciente creado exitosamente! ID: ${data.id || data._id});
+        alert(`Paciente creado exitosamente! ID: ${data.id || data._id}`);
         document.getElementById('patientForm').reset();
     } catch (error) {
         console.error('Error:', error);
