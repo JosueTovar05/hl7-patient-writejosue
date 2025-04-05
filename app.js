@@ -57,7 +57,7 @@ document.getElementById('patientForm').addEventListener('submit', async function
 
         if (!response.ok) {
             const errorData = await response.text();
-            throw new Error(Erroren la API: ${response.status} - ${errorData});
+            throw new Error('Erroren la API:' ${response.status} - ${errorData});
         });
 
         const data = await response.json();
