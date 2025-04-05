@@ -1,4 +1,3 @@
-
 document.getElementById('patientForm').addEventListener('submit', async function(event) {
     event.preventDefault();
 
@@ -46,7 +45,7 @@ document.getElementById('patientForm').addEventListener('submit', async function
     };
 
     try {
-        const response = await fetch('https://hl7-fhir-ehrjosue.onrender.com/Patient', {
+        const response = await fetch('https://cors-anywhere.herokuapp.com/https://hl7-fhir-ehrjosue.onrender.com/Patient'), {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -57,8 +56,8 @@ document.getElementById('patientForm').addEventListener('submit', async function
 
         if (!response.ok) {
             const errorData = await response.text();
-            throw new Error('Erroren la API:' ${response.status} - ${errorData});
-        });
+            throw new Error(Error en la API: ${response.status} - ${errorData});
+        }
 
         const data = await response.json();
         console.log('Success:', data);
@@ -69,5 +68,3 @@ document.getElementById('patientForm').addEventListener('submit', async function
         alert(Hubo un error al crear el paciente: ${error.message});
     }
 });
-
-
