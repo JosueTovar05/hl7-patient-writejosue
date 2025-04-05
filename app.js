@@ -1,3 +1,4 @@
+<script>
 document.getElementById('patientForm').addEventListener('submit', async function(event) {
     event.preventDefault();
 
@@ -68,3 +69,6 @@ document.getElementById('patientForm').addEventListener('submit', async function
         alert(Hubo un error al crear el paciente: ${error.message});
     }
 });
+</script>
+
+trata con este
