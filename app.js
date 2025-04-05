@@ -47,7 +47,7 @@ document.getElementById('patientForm').addEventListener('submit', function(event
     };
 
     // Enviar los datos usando Fetch API
-    fetch('https://hl7-fhir-ehrjosue.onrender.com/patient', {
+    fetch('https://hl7-fhir-ehrjosue.onrender.com/pacients', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
