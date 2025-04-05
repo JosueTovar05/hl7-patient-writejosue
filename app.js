@@ -65,6 +65,6 @@ document.getElementById('patientForm').addEventListener('submit', async function
         document.getElementById('patientForm').reset();
     } catch (error) {
         console.error('Error:', error);
-        alert(Hubo un error al crear el paciente: ${error.message});
+        alert(`Error al crear paciente: ${error.message}`);
     }
 });
