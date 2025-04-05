@@ -55,6 +55,8 @@ document.getElementById('patientForm').addEventListener('submit', async function
         });
         
         
+
+
         });
 
         if (!response.ok) {
