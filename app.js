@@ -54,10 +54,6 @@ document.getElementById('patientForm').addEventListener('submit', async function
             body: JSON.stringify(patient)
         });
         
-        
-
-
-        });
 
         if (!response.ok) {
             const errorData = await response.text();
